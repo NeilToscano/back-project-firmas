@@ -1,5 +1,6 @@
 import express from 'express'
 import 'dotenv/config'
+import cors from 'cors'
 import authRoute from '../routes/auth.js'
 import usuarioRoute from '../routes/usuarios.js'
 import dbConnection from '../database/config.js';
@@ -11,6 +12,7 @@ export class server{
         this.routes();
     }
     middlewares() {
+        this.app.use(cors());
         this.app.use( express.json() );
     }
 
