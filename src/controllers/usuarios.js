@@ -1,4 +1,4 @@
-import { Usuario } from "../models/usuario.js";
+import Usuario from "../models/usuario.js";
 import bcrypt from 'bcrypt'
 export const usuarioPost = async(req, res) => {
     const { nombre, email, password } = req.body;

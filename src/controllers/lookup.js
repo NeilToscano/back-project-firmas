@@ -1,34 +1,23 @@
 import { generarJWT } from "../helpers/generar-jwt.js";
 import Usuario from "../models/usuario.js";
-import bcrypt from 'bcrypt';
-
-
-export const login = async(req, res) => {
-    const { email, password } = req.body;
+export const lookup = async(req, res) => {
+    const { uid } = req;
     try {
-        const usuario = await Usuario.findOne({ email }).exec();
-        console.log(JSON.stringify(usuario));
-        console.log(usuario);
+        const usuario = await Usuario.findById(uid).exec();
         if(!usuario){
             return res.status(400).json({
-                msg:"Usuario-Password no son correctos"
-            })
-        }
-        const validPassword = bcrypt.compareSync(password,usuario.password)
-        if(!validPassword){
-            return res.status(400).json({
-                msg: "Usuario-Password no son validos"
+                msg:"Usuario no encontrado"
             })
         }
         //Generar JWT
         const token = await generarJWT( usuario.id, '1h' );
         const refreshtoken = await generarJWT( usuario.id, '7d' );
-
+    
         return res.status(200).json({
             usuario,
             token,
             refreshtoken
-        });
+        })
         
     } catch (error) {
         console.log(error);

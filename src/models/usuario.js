@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-const { Schema } = mongoose;
+const { Schema, model } = mongoose;
 const usuarioSchema = new Schema({
     nombre: {
         type: String,
@@ -27,4 +27,4 @@ usuarioSchema.methods.toJSON = function() {
     usuario.uid = _id;
     return usuario;
 }
-export const Usuario = mongoose.model('usuario', usuarioSchema);
+export default  model('usuario', usuarioSchema);
